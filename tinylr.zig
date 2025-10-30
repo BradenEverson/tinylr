@@ -12,7 +12,7 @@ const std = @import("std");
 ///             of your weight array and all future `x` you bring in for inference
 pub fn LogisticRegression(comptime T: type, comptime features: comptime_int) type {
     switch (@typeInfo(T)) {
-        .int => {},
+        .int, .float => {},
         else => @compileError("Logistic Regression type must be an Integer type"),
     }
 
@@ -32,12 +32,20 @@ pub fn LogisticRegression(comptime T: type, comptime features: comptime_int) typ
         fn doublePercision() type {
             const info = @typeInfo(T);
 
-            return @Type(.{
-                .int = .{
-                    .signedness = .signed,
-                    .bits = info.int.bits * 2,
+            switch (info) {
+                .int => |i| {
+                    return @Type(.{
+                        .int = .{
+                            .signedness = .signed,
+                            .bits = i.bits * 2,
+                        },
+                    });
                 },
-            });
+                else => {
+                    // Floats can stay as they are
+                    return T;
+                },
+            }
         }
 
         /// Performs an optimized version of logistic regression w/ threshold = 0.5
