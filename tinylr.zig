@@ -28,7 +28,7 @@ pub fn LogisticRegression(comptime T: type, comptime features: comptime_int) typ
         }
 
         /// Performs an optimized version of logistic regression w/ threshold = 0.5
-        /// This allows us to simplify the expression, if w dot (x - w0) >= 0, class 1 (true)
+        /// This allows us to simplify the expression, if w dot x + bias >= 0, class 1 (true)
         /// Else, class 0 (false)
         pub fn infer(self: *const Self, x: [features]T) bool {
             var result: doublePercision() = 0;
