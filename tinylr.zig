@@ -2,7 +2,7 @@
 
 const std = @import("std");
 
-pub fn LrModel(comptime T: type, comptime features: comptime_int) type {
+pub fn LogisticRegression(comptime T: type, comptime features: comptime_int) type {
     return struct {
         w: [features]T,
         bias: T,
@@ -42,7 +42,7 @@ pub fn LrModel(comptime T: type, comptime features: comptime_int) type {
 }
 
 test "construction" {
-    const Model = LrModel(i8, 2);
+    const Model = LogisticRegression(i8, 2);
     const m: Model = Model.init(.{ 1, 2 }, 3);
 
     try std.testing.expectEqual(m.w, .{ 1, 2 });
@@ -50,7 +50,7 @@ test "construction" {
 }
 
 test "inference" {
-    const Model = LrModel(i8, 2);
+    const Model = LogisticRegression(i8, 2);
     const m: Model = Model.init(.{ 1, 2 }, 3);
 
     // Should be above hyperplane (class 1)
