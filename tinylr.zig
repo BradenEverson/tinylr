@@ -2,7 +2,20 @@
 
 const std = @import("std");
 
+/// Creates a Logistic Regression Model structure for a given integer type
+///
+/// `T`:        Describes the type that weights and features hold.s hould be an int type,
+///             in most cases it should probably also be signed for your hyperplane to do
+///             anything significant
+///
+/// `features`: Describes the dimensionality of your features, this will be the size
+///             of your weight array and all future `x` you bring in for inference
 pub fn LogisticRegression(comptime T: type, comptime features: comptime_int) type {
+    switch (@typeInfo(T)) {
+        .int => {},
+        else => @compileError("Logistic Regression type must be an Integer type"),
+    }
+
     return struct {
         w: [features]T,
         bias: T,
@@ -21,7 +34,7 @@ pub fn LogisticRegression(comptime T: type, comptime features: comptime_int) typ
 
             return @Type(.{
                 .int = .{
-                    .signedness = info.int.signedness,
+                    .signedness = .signed,
                     .bits = info.int.bits * 2,
                 },
             });
