@@ -26,3 +26,11 @@ pub fn LrModel(comptime T: type, comptime features: comptime_int) type {
         }
     };
 }
+
+test "construction" {
+    const Model = LrModel(u8, 2);
+    const m: Model = Model.init(.{ 1, 2 }, 3);
+
+    try std.testing.expectEqual(m.w, .{ 1, 2 });
+    try std.testing.expectEqual(m.w0, 3);
+}
