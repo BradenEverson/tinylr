@@ -4,7 +4,7 @@ const std = @import("std");
 
 /// Creates a Logistic Regression Model structure for a given integer type
 ///
-/// `T`:        Describes the type that weights and features hold.s hould be an int type,
+/// `T`:        Describes the type that weights and features hold. should be an int type,
 ///             in most cases it should probably also be signed for your hyperplane to do
 ///             anything significant
 ///
